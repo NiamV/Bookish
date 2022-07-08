@@ -147,3 +147,32 @@ def bookish_routes(app):
             ]
 
             return {"books": results}
+
+    @app.route('/user/assign', methods = ['POST'])
+    def assign_copy():
+        if not request.is_json:
+            return {"error": "The request payload is not in JSON format"}
+
+        data = request.get_json()
+
+        if 'id' not in data:
+            return {"error": "No id was provided"}
+        if 'copyID' not in data:
+            return {"error": "No copyID was provided"}
+        if 'dueDate' not in data:
+            return {"error": "No dueDAte was provided"}
+
+        id = data['id']
+        copyID = data['copyID']
+        dueDate = data['dueDate']
+
+        copy = db.session.query(Copy.copyID, Copy.isbn, Copy.userCheckedOut, Copy.dueDate).filter(Copy.copyID == copyID).update({'userCheckedOut': id, 'dueDate': dueDate})
+        print(copy)
+
+        # copy.userCheckedOut = id
+        # copy.dueDate = dueDate
+
+        # db.session.add(copy)
+        db.session.commit()
+
+        return {}
