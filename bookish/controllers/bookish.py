@@ -1,6 +1,5 @@
 import sqlalchemy.exc
 from flask import request
-from bookish.models.example import Example
 from bookish.models.books import Book
 from bookish.models.users import User
 from bookish.models.copies import Copy
@@ -13,7 +12,7 @@ def bookish_routes(app):
     def health_check():
         return {"status": "OK"}
 
-    @app.route('/book', methods=['POST'])
+    @app.route('/book/create', methods=['POST'])
     def add_book():
         if not request.is_json:
             return { "error": "The request payload is not in JSON format" }
@@ -47,8 +46,8 @@ def bookish_routes(app):
 
         return { "message": "Book has been successfully created." }
 
-    @app.route('/catalogue', methods=['GET'])
-    def get_catalogue():
+    @app.route('/books', methods=['GET'])
+    def get_books():
         books = Book.query.all()
         results = [
             {
@@ -58,8 +57,8 @@ def bookish_routes(app):
             } for book in sorted(books, key = lambda b: b.title)]
         return {"books": results}
 
-    @app.route('/userbooks', methods=['POST'])
-    def get_userbooks():
+    @app.route('/user', methods=['POST'])
+    def get_user():
         if not request.is_json:
             return { "error": "The request payload is not in JSON format" }
 
@@ -78,7 +77,7 @@ def bookish_routes(app):
             } for userbook in userbooks]
         return {"books for user": results}
 
-    @app.route('/copies', methods=['POST'])
+    @app.route('/book/copies', methods=['POST'])
     def get_copies():
         if not request.is_json:
             return {"error": "The request payload is not in JSON format"}
@@ -91,7 +90,7 @@ def bookish_routes(app):
         isbn = data['isbn']
 
         copies = db.session.query(Copy.dueDate, Copy.userCheckedOut).filter(Copy.isbn == isbn)
-        unavailable_copies = copies.filter(Copy.dueDate != None)
+        unavailable_copies = copies.filter(Copy.dueDate is not None)
 
         results = [
             {
@@ -100,64 +99,51 @@ def bookish_routes(app):
             } for copy in unavailable_copies
         ]
 
-        totalCopies = 0
+        total_copies = 0
         for copy in copies:
-            totalCopies += 1
+            total_copies += 1
 
-        availableCopies = totalCopies
+        available_copies = total_copies
         for copy in unavailable_copies:
-            availableCopies -= 1
+            available_copies -= 1
 
         return {
-            "total_copies": totalCopies,
-            "available_copies": availableCopies,
+            "total_copies": total_copies,
+            "available_copies": available_copies,
             "due_dates": results
         }
 
-    @app.route('/titleSearch', methods = ['POST'])
-    def get_by_title():
+    @app.route('/searchbook', methods = ['POST'])
+    def search_book():
         if not request.is_json:
             return {"error": "The request payload is not in JSON format"}
 
         data = request.get_json()
 
-        if 'title' not in data:
-            return {"error": "No title was provided"}
+        if 'title' in data:
+            title = data['title']
+            books = db.session.query(Book.isbn, Book.title, Book.author).filter(Book.title == title)
 
-        title = data['title']
-
-        books = db.session.query(Book.isbn, Book.title, Book.author).filter(Book.title == title)
-
-        results = [
-            {
-                'isbn': book.isbn,
-                'title': book.title,
-                'author': book.author
-            } for book in books
-        ]
-
-        return {"books": results}
-
-
-
-    @app.route('/example', methods=['POST', 'GET'])
-    def handle_example():
-        if request.method == 'POST':
-            if request.is_json:
-                data = request.get_json()
-                new_example = Example(data1=data['data1'], data2=data['data2'])
-                db.session.add(new_example)
-                db.session.commit()
-                return {"message": "New example has been created successfully."}
-            else:
-                return {"error": "The request payload is not in JSON format"}
-
-        elif request.method == 'GET':
-            examples = Example.query.all()
             results = [
                 {
-                    'id': example.id,
-                    'data1': example.data1,
-                    'data2': example.data2
-                } for example in examples]
-            return {"examples": results}
+                    'isbn': book.isbn,
+                    'title': book.title,
+                    'author': book.author
+                } for book in books
+            ]
+
+            return {"books": results}
+        elif 'author' in data:
+            author = data['author']
+
+            books = db.session.query(Book.isbn, Book.title, Book.author).filter(Book.author == author)
+
+            results = [
+                {
+                    'isbn': book.isbn,
+                    'title': book.title,
+                    'author': book.author
+                } for book in books
+            ]
+
+            return {"books": results}
