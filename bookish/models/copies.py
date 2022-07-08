@@ -6,7 +6,7 @@ class Copy(db.Model):
     __tablename__ = 'Copies'
 
     # Here we outline what columns we want in our database
-    copyID = db.Column(db.String(), primary_key=True, autoincrement=True)
+    copyID = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     isbn = db.Column(db.String())
     userCheckedOut = db.Column(db.Integer())
     dueDate = db.Column(db.Date())
@@ -24,5 +24,4 @@ class Copy(db.Model):
             'dueDate': self.dueDate,
             'isbn': self.isbn,
             'userCheckedOut': self.userCheckedOut,
-            'dueDate': self.dueDate
         }
