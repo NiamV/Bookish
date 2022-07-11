@@ -4,8 +4,7 @@ export class ApiService {
       fetch("/healthcheck", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Accept": "application/json"          
         },
       })
         .then((response) => checkResponse(response))

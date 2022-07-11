@@ -25,11 +25,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('isbn')
     )
     op.create_table('Copies',
-    sa.Column('copyID', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('copy_id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('isbn', sa.String(), nullable=True),
-    sa.Column('userCheckedOut', sa.Integer(), nullable=True),
-    sa.Column('dueDate', sa.Date(), nullable=True),
-    sa.PrimaryKeyConstraint('copyID')
+    sa.Column('user_checked_out', sa.Integer(), nullable=True),
+    sa.Column('due_date', sa.Date(), nullable=True),
+    sa.PrimaryKeyConstraint('copy_id')
     )
     # ### end Alembic commands ###
 

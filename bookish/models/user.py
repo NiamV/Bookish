@@ -8,12 +8,12 @@ class User(db.Model):
     # Here we outline what columns we want in our database
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String())
-    accessToken = db.Column(db.String())
+    access_token = db.Column(db.String())
 
-    def __init__(self, id, name, accessToken):
+    def __init__(self, id, name, access_token):
         self.id = id
         self.name = name
-        self.accessToken = accessToken
+        self.access_token = access_token
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -22,5 +22,5 @@ class User(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'accessToken': self.accessToken
+            'access_token': self.access_token
         }

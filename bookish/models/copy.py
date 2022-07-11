@@ -6,22 +6,23 @@ class Copy(db.Model):
     __tablename__ = 'Copies'
 
     # Here we outline what columns we want in our database
-    copyID = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    copy_id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     isbn = db.Column(db.String())
-    userCheckedOut = db.Column(db.Integer())
-    dueDate = db.Column(db.Date())
+    user_checked_out = db.Column(db.Integer())
+    due_date = db.Column(db.Date())
 
-    def __init__(self, isbn, userCheckedOut, dueDate):
+    def __init__(self, isbn, user_checked_out, due_date):
         self.isbn = isbn
-        self.userCheckedOut = userCheckedOut
-        self.dueDate = dueDate
+        self.user_checked_out = user_checked_out
+        self.due_date = due_date
 
     def __repr__(self):
-        return '<copyID {}>'.format(self.copyID)
+        return '< copy_id {}>'.format(self.copy_id)
 
     def serialize(self):
         return {
-            'dueDate': self.dueDate,
+            'due_date': self.due_date,
             'isbn': self.isbn,
-            'userCheckedOut': self.userCheckedOut,
+            'user_checked_out': self.user_checked_out,
+            'copy_id': self.copy_id
         }
