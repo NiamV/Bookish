@@ -5,15 +5,8 @@ import {
   HomeTitleContainer,
 } from "./HomeComponents";
 
-export type HomeState = {
-  example: {
-      id: any
-      data1: any
-  }
-}
-
-export class HomePage extends Component<{}, HomeState> {
-  constructor(props: HomeState) {
+export class HomePage extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {example: props.example};
@@ -25,6 +18,7 @@ export class HomePage extends Component<{}, HomeState> {
         <HomeTitleContainer>
           <HomeTitleTag>Example</HomeTitleTag>
           <li>{this.state.example.data1}</li>
+          <li>{this.state.example.data2}</li>
         </HomeTitleContainer>
       </HomeDiv>
     );

@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 
 export const HomeDiv = styled.div`
@@ -20,3 +19,4 @@ export const HomeTitleTag = styled.span`
   font-size: 3em;
   font-weight: bold;
 `;
+
