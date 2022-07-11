@@ -1,16 +1,11 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import {
   HomeDiv,
   HomeTitleTag,
   HomeTitleContainer,
 } from "./HomeComponents";
 
-export class HomePage extends Component{
-  // const [status, setStatus] = useState(null);
-  //
-  // function handleStatus(status) {
-  //   setStatus(status)
-  // }
+export class HomePage extends Component {
   render() {
     return (
         <HomeDiv>

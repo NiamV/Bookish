@@ -1,5 +1,5 @@
 export class ApiService {
-  example() {
+  healthCheck() {
     return new Promise((resolve) =>
       fetch("/healthcheck", {
         method: "GET",
