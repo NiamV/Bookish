@@ -5,19 +5,20 @@ import {
   HomeTitleContainer,
 } from "./HomeComponents";
 
-export function HomePage() {
-  const [status, setStatus] = useState(null);
-
-  function handleStatus(status) {
-    setStatus(status)
+export class HomePage extends Component{
+  // const [status, setStatus] = useState(null);
+  //
+  // function handleStatus(status) {
+  //   setStatus(status)
+  // }
+  render() {
+    return (
+        <HomeDiv>
+          <HomeTitleContainer>
+            <HomeTitleTag>Status:</HomeTitleTag>
+            <li>{this.props.okStatus}!</li>
+          </HomeTitleContainer>
+        </HomeDiv>
+    );
   }
-
-  return (
-    <HomeDiv>
-      <HomeTitleContainer>
-        <HomeTitleTag>Status:</HomeTitleTag>
-        <li>{status}!</li>
-      </HomeTitleContainer>
-    </HomeDiv>
-  );
 }
