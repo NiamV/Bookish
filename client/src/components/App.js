@@ -13,6 +13,12 @@ export default function App() {
     });
   };
 
+  let books = () => {
+    apiService.books().then((status) => {
+      initialize(status);
+    });
+  };
+
   let initialize = (status) => {
     setState(status);
   };
