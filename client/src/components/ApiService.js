@@ -51,7 +51,6 @@ export class ApiService {
 }
 
 const checkResponse = (response) => {
-    console.log(response)
   if (response.ok) {
     return response;
   }

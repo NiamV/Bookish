@@ -14,8 +14,13 @@ export function HomePage(props) {
     })
   }
 
-  let showBooksByTitle = () => {
-    props.apiService.book(true,data).then((books) => {
+  let handleSearch = (event) => {
+    event.preventDefault()
+    showBooksByTitle(event.target[0].value)
+  }
+
+  let showBooksByTitle = (data) => {
+    props.apiService.book(true, data).then((books) => {
       setBooks(books)
     })
   }
@@ -27,14 +32,14 @@ export function HomePage(props) {
           <li>{props.okStatus}!</li>
           <button type="button" onClick={showBooks}>See all books!</button>
 
-          <form>
+          <form onSubmit={handleSearch}>
             <input type="text"></input>
-            <input type="submit" onClick={showBooksByTitle()}></input>
+            <input type="submit"></input>
           </form>
 
 
           {books.books.map((value, index) => {
-            return <p>{value.title} by {value.author} (ISBN: {value.isbn})</p>
+            return <p key="{value.isbn}">{value.title} by {value.author} (ISBN: {value.isbn})</p>
           })}
 
         </HomeTitleContainer>
