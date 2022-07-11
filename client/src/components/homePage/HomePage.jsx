@@ -1,26 +1,23 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   HomeDiv,
   HomeTitleTag,
   HomeTitleContainer,
 } from "./HomeComponents";
 
-export class HomePage extends Component {
-  constructor(props) {
-    super(props);
+export function HomePage() {
+  const [status, setStatus] = useState(null);
 
-    this.state = {example: props.example};
+  function handleStatus(status) {
+    setStatus(status)
   }
 
-  render() {
-    return (
-      <HomeDiv>
-        <HomeTitleContainer>
-          <HomeTitleTag>Example</HomeTitleTag>
-          <li>{this.state.example.data1}</li>
-          <li>{this.state.example.data2}</li>
-        </HomeTitleContainer>
-      </HomeDiv>
-    );
-  }
+  return (
+    <HomeDiv>
+      <HomeTitleContainer>
+        <HomeTitleTag>Status:</HomeTitleTag>
+        <li>{status}!</li>
+      </HomeTitleContainer>
+    </HomeDiv>
+  );
 }

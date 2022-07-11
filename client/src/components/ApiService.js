@@ -5,11 +5,12 @@ export class ApiService {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json"
         },
       })
         .then((response) => checkResponse(response))
         .then((response) => resolve(response.json()))
-        .catch((error) => alert(error))
+        .catch((error) => console.error(error))
 
     );
   }
@@ -17,7 +18,6 @@ export class ApiService {
 
 const checkResponse = (response) => {
   if (response.ok) {
-    console.log(response)
     return response;
   }
   return response.text().then((e) => {

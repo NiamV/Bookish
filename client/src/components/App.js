@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { Route } from "react-router";
+import React, { Component, useEffect } from "react";
 import { Container } from "reactstrap";
-import { HomePage } from "./homePage/HomePage";
+import { HomePage } from "./HomePage/HomePage";
 import { ApiService } from "./ApiService";
 
 export default class App extends Component {
@@ -19,18 +18,21 @@ export default class App extends Component {
   };
 
   initialize = (example) => {
-    this.setState({ example });
+    useEffect(() => {
+
+    });
   };
 
   render() {
-    this.example();
+    if (this.state === BLANK_STATE) {
+      this.example()
+    }
+
 
     return (
       <div>
         <Container>
-          <Route exact path="/">
-            <HomePage example={this.state.example} />
-          </Route>
+            <HomePage/>
         </Container>
       </div>
     );
@@ -39,8 +41,6 @@ export default class App extends Component {
 
 const BLANK_STATE = {
   example: {
-    id: null,
-    data1: null,
-    data2: null
-  },
+    status: null
+  }
 };
