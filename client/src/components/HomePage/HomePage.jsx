@@ -1,39 +1,43 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   HomeDiv,
   HomeTitleTag,
   HomeTitleContainer,
 } from "./HomeComponents";
 
-export class HomePage extends Component {
-  constructor() {
-    super()
-    this.state = {
-      books: []
-    }
-  }
+export function HomePage(props) {
+  const [books, setBooks] = useState({books: []});
 
-  showBooks = () => {
-    this.props.apiService.books().then((books) => {
-      this.setState(books)
+  let showBooks = () => {
+    props.apiService.books().then((books) => {
+      setBooks(books)
     })
   }
 
-  render() {
-    console.log(this.state)
-    return (
-        <HomeDiv>
-          <HomeTitleContainer>
-            <HomeTitleTag>Status:</HomeTitleTag>
-            <li>{this.props.okStatus}!</li>
-            <button type="button" onClick={this.showBooks}>See all books!</button>
-
-            {this.state.books.map((value, index) => {
-              return <p>{value.title} by {value.author} (ISBN: {value.isbn})</p>
-            })}
-          
-          </HomeTitleContainer>
-        </HomeDiv>
-    );
+  let showBooksByTitle = () => {
+    props.apiService.book(true,data).then((books) => {
+      setBooks(books)
+    })
   }
+
+  return (
+      <HomeDiv>
+        <HomeTitleContainer>
+          <HomeTitleTag>Status:</HomeTitleTag>
+          <li>{props.okStatus}!</li>
+          <button type="button" onClick={showBooks}>See all books!</button>
+
+          <form>
+            <input type="text"></input>
+            <input type="submit" onClick={showBooksByTitle()}></input>
+          </form>
+
+
+          {books.books.map((value, index) => {
+            return <p>{value.title} by {value.author} (ISBN: {value.isbn})</p>
+          })}
+
+        </HomeTitleContainer>
+      </HomeDiv>
+  );
 }

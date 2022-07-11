@@ -12,10 +12,13 @@ def book_routes(app):
 
     @app.route('/book', methods=['POST'])
     def search_book():
+        print("search book called")
         if not request.is_json:
             return {"error": "The request payload is not in JSON format"}
 
+        print("is json")
         data = request.get_json()
+        print(data, "!!")
 
         if 'title' in data:
             title = data['title']

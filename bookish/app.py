@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-from flask_cors import CORS
 from bookish.models import db, migrate
 from bookish.controllers import register_controllers
 
