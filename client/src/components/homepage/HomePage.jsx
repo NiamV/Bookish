@@ -17,8 +17,6 @@ export class HomePage extends Component {
       <HomeDiv>
         <HomeTitleContainer>
           <HomeTitleTag>Example</HomeTitleTag>
-          <li>{this.state.example.data1}</li>
-          <li>{this.state.example.data2}</li>
         </HomeTitleContainer>
       </HomeDiv>
     );

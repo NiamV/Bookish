@@ -1,8 +1,8 @@
 import sqlalchemy.exc
 from flask import request
-from bookish.models.books import Book
-from bookish.models.users import User
-from bookish.models.copies import Copy
+from bookish.models.book import Book
+from bookish.models.user import User
+from bookish.models.copy import Copy
 
 from bookish.models import db
 
@@ -15,16 +15,16 @@ def bookish_routes(app):
     @app.route('/book/create', methods=['POST'])
     def add_book():
         if not request.is_json:
-            return { "error": "The request payload is not in JSON format" }
+            return {"error": "The request payload is not in JSON format"}
 
         data = request.get_json()
 
         if 'isbn' not in data:
-            return { "error": "No ISBN was provided" }
+            return {"error": "No ISBN was provided"}
         elif 'author' not in data:
-            return { "error": "No author was provided" }
+            return {"error": "No author was provided"}
         elif 'title' not in data:
-            return { "error": "No title was provided" }
+            return {"error": "No title was provided"}
 
         isbn = data['isbn']
         author = data['author']
@@ -37,14 +37,13 @@ def bookish_routes(app):
         try:
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
-            return { "error": "Book with ISBN already exists." }
+            return {"error": "Book with ISBN already exists."}
 
         for i in range(int(copies)):
             db.session.add(Copy(isbn, -1, None))
         db.session.commit()
 
-
-        return { "message": "Book has been successfully created." }
+        return {"message": "Book has been successfully created."}
 
     @app.route('/books', methods=['GET'])
     def get_books():
@@ -54,28 +53,10 @@ def bookish_routes(app):
                 'isbn': book.isbn,
                 'title': book.title,
                 'author': book.author
-            } for book in sorted(books, key = lambda b: b.title)]
+            } for book in sorted(books, key=lambda b: b.title)]
         return {"books": results}
 
-    @app.route('/user', methods=['POST'])
-    def get_user():
-        if not request.is_json:
-            return { "error": "The request payload is not in JSON format" }
 
-        data = request.get_json()
-
-        if 'user' not in data:
-            return { "error": "No user was provided" }
-
-        user = data['user']
-        userbooks = db.session.query(Book.title, Copy.dueDate).filter(Book.isbn == Copy.isbn).filter(Copy.userCheckedOut == user)
-
-        results = [
-            {
-                'title': userbook.title,
-                'dueDate': userbook.dueDate,
-            } for userbook in userbooks]
-        return {"books for user": results}
 
     @app.route('/book/copies', methods=['POST'])
     def get_copies():
@@ -89,13 +70,13 @@ def bookish_routes(app):
 
         isbn = data['isbn']
 
-        copies = db.session.query(Copy.dueDate, Copy.userCheckedOut).filter(Copy.isbn == isbn)
-        unavailable_copies = copies.filter(Copy.dueDate is not None)
+        copies = db.session.query(Copy.due_date, Copy.user_checked_out).filter(Copy.isbn == isbn)
+        unavailable_copies = copies.filter(Copy.due_date is not None)
 
         results = [
             {
-                'dueDate': copy.dueDate,
-                'userCheckedOut': copy.userCheckedOut
+                'due_date': copy.due_date,
+                'user_checked_out': copy.user_checked_out
             } for copy in unavailable_copies
         ]
 
@@ -113,7 +94,7 @@ def bookish_routes(app):
             "due_dates": results
         }
 
-    @app.route('/searchbook', methods = ['POST'])
+    @app.route('/searchbook', methods=['POST'])
     def search_book():
         if not request.is_json:
             return {"error": "The request payload is not in JSON format"}
@@ -148,7 +129,7 @@ def bookish_routes(app):
 
             return {"books": results}
 
-    @app.route('/user/assign', methods = ['POST'])
+    @app.route('/user/assign', methods=['POST'])
     def assign_copy():
         if not request.is_json:
             return {"error": "The request payload is not in JSON format"}
@@ -157,22 +138,16 @@ def bookish_routes(app):
 
         if 'id' not in data:
             return {"error": "No id was provided"}
-        if 'copyID' not in data:
-            return {"error": "No copyID was provided"}
-        if 'dueDate' not in data:
-            return {"error": "No dueDAte was provided"}
+        if 'copy_id' not in data:
+            return {"error": "No  copy_id was provided"}
+        if 'due_date' not in data:
+            return {"error": "No due_date was provided"}
 
         id = data['id']
-        copyID = data['copyID']
-        dueDate = data['dueDate']
+        copy_id = data['copy_id']
+        due_date = data['due_date']
 
-        copy = db.session.query(Copy.copyID, Copy.isbn, Copy.userCheckedOut, Copy.dueDate).filter(Copy.copyID == copyID).update({'userCheckedOut': id, 'dueDate': dueDate})
-        print(copy)
-
-        # copy.userCheckedOut = id
-        # copy.dueDate = dueDate
-
-        # db.session.add(copy)
+        db.session.query(Copy).filter(Copy. copy_id ==  copy_id).update({'user_checked_out': id, 'due_date': due_date})
         db.session.commit()
 
-        return {}
+        return {"message": "Assigned book with copy ID " + str( copy_id) + " to user with id " + str(id) + " due on " + str(due_date)}

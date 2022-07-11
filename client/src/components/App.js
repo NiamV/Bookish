@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
 import { Container } from "reactstrap";
-import { HomePage } from "./homePage/HomePage";
+import { HomePage } from "./homepage/HomePage";
 import { ApiService } from "./ApiService";
 
 export default class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.apiService = new ApiService();
     this.state = BLANK_STATE;
   }
 
   example = () => {
-    this.apiService.example().then((example) => {
+    this.apiService.healthcheck().then((example) => {
       this.initialize(example);
     });
   };

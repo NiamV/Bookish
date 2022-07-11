@@ -1,10 +1,11 @@
 export class ApiService {
-  example() {
+  healthcheck() {
     return new Promise((resolve) =>
-      fetch("/example", {
+      fetch("/healthcheck", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json"
         },
       })
         .then((response) => checkResponse(response))
@@ -15,9 +16,12 @@ export class ApiService {
 }
 
 const checkResponse = (response) => {
+  console.log(response)
+  
   if (response.ok) {
     return response;
   }
+
   return response.text().then((e) => {
     throw new Error(e);
   });
