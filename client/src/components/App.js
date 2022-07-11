@@ -30,7 +30,7 @@ export default function App() {
   return (
     <div>
       <Container>
-          <HomePage okStatus={state.status}/>
+          <HomePage apiService={apiService} okStatus={state.status} />
       </Container>
     </div>
   );
