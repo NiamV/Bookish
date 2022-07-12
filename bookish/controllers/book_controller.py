@@ -61,6 +61,8 @@ def book_routes(app):
             return {"error": "No author was provided"}
         elif 'title' not in data:
             return {"error": "No title was provided"}
+        elif 'copies' not in data:
+            return {"error": "No copies was provided"}
 
         isbn = data['isbn']
         author = data['author']
