@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 44058644a021
-Revises: 6ab1474d3c66
-Create Date: 2022-07-08 12:26:17.299283
+Revision ID: 3cf724500e14
+Revises: 41433d6fe4f4
+Create Date: 2022-07-12 14:15:52.657884
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '44058644a021'
-down_revision = '6ab1474d3c66'
+revision = '3cf724500e14'
+down_revision = '41433d6fe4f4'
 branch_labels = None
 depends_on = None
 
@@ -25,14 +25,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('isbn')
     )
     op.create_table('Copies',
-    sa.Column('copy_id', sa.String(), nullable=False),
+    sa.Column('copy_id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('isbn', sa.String(), nullable=True),
     sa.Column('user_checked_out', sa.Integer(), nullable=True),
     sa.Column('due_date', sa.Date(), nullable=True),
     sa.PrimaryKeyConstraint('copy_id')
     )
     op.create_table('Users',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('access_token', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')

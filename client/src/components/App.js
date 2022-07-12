@@ -1,46 +1,27 @@
-import React, { Component } from "react";
-import { Route } from "react-router";
+import React from "react";
 import { Container } from "reactstrap";
-import { HomePage } from "./homePage/HomePage";
+import { HomePage } from "./HomePage/HomePage";
+import { LoginPage } from "./UserLogin/LoginPage";
+import { RegisterPage } from "./UserLogin/RegisterPage";
 import { ApiService } from "./ApiService";
+import { Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom"
 
-export default class App extends Component {
-  constructor() {
-    super();
+export default function App() {
+  const apiService = new ApiService()
 
-    this.apiService = new ApiService();
-    this.state = BLANK_STATE;
-  }
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage apiService={apiService} />} />
+          <Route path="/register" element={<RegisterPage apiService={apiService} />} />
+          <Route path="/login" element={<LoginPage apiService={apiService} />} />
+        </Routes>
 
-  example = () => {
-    this.apiService.example().then((example) => {
-      this.initialize(example);
-    });
-  };
+      </BrowserRouter>
 
-  initialize = (example) => {
-    this.setState({ example });
-  };
 
-  render() {
-    this.example();
-
-    return (
-      <div>
-        <Container>
-          <Route exact path="/">
-            <HomePage example={this.state.example} />
-          </Route>
-        </Container>
-      </div>
-    );
-  }
+    </div>
+  );
 }
-
-const BLANK_STATE = {
-  example: {
-    id: null,
-    data1: null,
-    data2: null
-  },
-};

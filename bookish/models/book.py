@@ -1,7 +1,7 @@
 from bookish.app import db
 
 
-class Books(db.Model):
+class Book(db.Model):
     # This sets the name of the table in the database
     __tablename__ = 'Books'
 
