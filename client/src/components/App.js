@@ -12,37 +12,15 @@ export default function App() {
 
   return (
     <div>
-      <Container>
-          <HomePage apiService={apiService} />
-      </Container>
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      
-
-      <Container>
-          <LoginPage apiService={apiService}/>
-      </Container>
-
-      <Container>
-          <RegisterPage apiService={apiService}/>
-      </Container>
-
       <BrowserRouter>
-          <Routes>
-              <Route path="/login"  element={<LoginPage apiService={apiService}/>} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<HomePage apiService={apiService} />} />
+          <Route path="/register" element={<RegisterPage apiService={apiService} />} />
+          <Route path="/login" element={<LoginPage apiService={apiService} />} />
+        </Routes>
+
       </BrowserRouter>
+
 
     </div>
   );
