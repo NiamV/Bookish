@@ -1,14 +1,17 @@
 import React, { useState } from "react"
-import { BookSearch } from "../BookSearch/BookSearch"
-import { BookDisplay } from "../BookDisplay/BookDisplay";
+import { BookSearch } from "./BookSearch/BookSearch"
+import { BookDisplay } from "./BookDisplay/BookDisplay";
 import {
-  HomeDiv,
-  HomeTitleTag,
-  HomeTitleContainer,
-  HomeSubTitleTag,
-  HomeSubTitleContainer
+    HomeDiv,
+    HomeTitleTag,
+    HomeTitleContainer,
+    HomeSubTitleTag,
+    HomeSubTitleContainer,
+    HomeLoginContainer,
+    LoginButton
 } from "./HomeComponents";
 import "./HomePage.css"
+import {Link} from "react-router-dom";
 
 export function HomePage(props) {
 
