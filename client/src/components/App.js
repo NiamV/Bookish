@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container } from "reactstrap";
 import { HomePage } from "./HomePage/HomePage";
 import { LoginPage } from "./UserLogin/LoginPage";
@@ -7,32 +7,11 @@ import { ApiService } from "./ApiService";
 
 export default function App() {
   const apiService = new ApiService()
-  const [state, setState] = useState(BLANK_STATE);
-
-  let healthCheck = () => {
-    apiService.healthCheck().then((status) => {
-      initialize(status);
-    });
-  };
-
-  let books = () => {
-    apiService.books().then((status) => {
-      initialize(status);
-    });
-  };
-
-  let initialize = (status) => {
-    setState(status);
-  };
-
-  if (state === BLANK_STATE) {
-    healthCheck()
-  }
 
   return (
     <div>
       <Container>
-          <HomePage apiService={apiService} okStatus={state.status} />
+          <HomePage apiService={apiService} />
       </Container>
 
       <Container>
@@ -45,7 +24,3 @@ export default function App() {
     </div>
   );
 }
-
-const BLANK_STATE = {
-  status: ""
-};

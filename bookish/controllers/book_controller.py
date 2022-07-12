@@ -68,7 +68,7 @@ def book_routes(app):
 
         result = create_books(isbn, title, author, copies)
         if not result:
-            return {"error": "Book with ISBN already exists."}
+            return {"error": "Book with ISBN already exists."}, 400
         else:
             return {"message": "Book has been successfully created."}
 
@@ -124,27 +124,24 @@ def book_routes(app):
         isbn = data['isbn']
 
         copies = db.session.query(Copy.due_date, Copy.user_checked_out).filter(Copy.isbn == isbn)
-        unavailable_copies = copies.filter(Copy.due_date is not None)
 
         results = [
             {
                 'due_date': copy.due_date,
                 'user_checked_out': copy.user_checked_out
-            } for copy in unavailable_copies
+            } for copy in copies
         ]
 
-        total_copies = 0
-        for _ in copies:
+        available_copies, total_copies = 0, 0
+        for copy in copies:
             total_copies += 1
-
-        available_copies = total_copies
-        for copy in unavailable_copies:
-            available_copies -= 1
+            if copy.due_date is None:
+                available_copies += 1
 
         return {
             "total_copies": total_copies,
             "available_copies": available_copies,
-            "due_dates": results
+            "copy_information": results
         }
 
 
