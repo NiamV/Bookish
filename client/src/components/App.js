@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "reactstrap";
 import { HomePage } from "./HomePage/HomePage";
 import { LoginPage } from "./UserLogin/LoginPage";
 import { RegisterPage } from "./UserLogin/RegisterPage";
@@ -11,6 +10,7 @@ import {UserPage} from "./UserLogin/UserPage";
 export const apiContext = React.createContext(new ApiService())
 export const loginContext = React.createContext({user: null})
 
+
 export default function App() {
   return (
     <div>
@@ -21,10 +21,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/user" element={<UserPage />} />
         </Routes>
-
       </BrowserRouter>
-
-
     </div>
   );
 }
