@@ -109,7 +109,7 @@ def book_routes(app):
                 if create_books(book_info[0], book_info[1], book_info[2], count):
                     uploaded += 1
 
-        return {"message": "uploaded " + str(uploaded) + " books"}
+        return {"message": "Uploaded " + str(uploaded) + " books"}
 
     @app.route('/book/copies', methods=['POST'])
     def get_copies():
@@ -152,6 +152,7 @@ def create_books(isbn, title, author, copies) -> bool:
     try:
         db.session.commit()
     except sqlalchemy.exc.IntegrityError:
+        db.session.rollback()
         return False
 
     for i in range(int(copies)):
