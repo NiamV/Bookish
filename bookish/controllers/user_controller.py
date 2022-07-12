@@ -29,6 +29,21 @@ def user_routes(app):
             } for userbook in userbooks]
         return {"books_for_user": results}
 
+    @app.route('/user/name', methods=['POST'])
+    def get_user_name():
+        if not request.is_json:
+            return {"error": "The request payload is not in JSON format"}
+
+        data = request.get_json()
+
+        if 'user' not in data:
+            return {"error": "No user was provided"}
+
+        user = data['user']
+        user_name = db.session.query(User.name).filter(User.id == user)
+
+        return {"user_name": list(user_name)[0].name}
+
     @app.route('/user/isUser', methods=['POST'])
     def checkUser():
         if not request.is_json:
@@ -86,10 +101,10 @@ def user_routes(app):
         name = data['name']
 
         users = db.session.query(User)
-        newID = len(list(users))
+        newID = len(list(users)) + 1
 
         create_user(name)
-        return {"message": "User has been successfully created with id: " + str(newID)}
+        return {"message": "User has been successfully created with library card number: " + str(newID)}
 
 
 def create_user(name):

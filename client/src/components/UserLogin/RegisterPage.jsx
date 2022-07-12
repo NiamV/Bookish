@@ -1,16 +1,20 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useContext } from "react";
 import {
   RegisterDiv,
   LoginTitleTag,
   LoginTitleContainer,
 } from "./LoginComponents";
+import {apiContext} from "../App";
+import {Link} from "react-router-dom";
 
 export function RegisterPage(props) {
   const [output, setOutput] = useState("");
 
+  const apiService = useContext(apiContext)
+
   let handleRegistration = (event) => {
     event.preventDefault()
-    props.apiService.user_create(event.target[0].value).then((response) => {
+    apiService.user_create(event.target[0].value).then((response) => {
         if(response.hasOwnProperty("error")){
             setOutput(response.error)
         } else {
@@ -29,6 +33,10 @@ export function RegisterPage(props) {
               <input type="text" placeholder={"Name"} />
               <input type="submit"/>
             </form>
+
+            <p>{output}</p>
+
+            <button><Link to={"/login"}>Back to Login Page</Link></button>
 
         </LoginTitleContainer>
       </RegisterDiv>
