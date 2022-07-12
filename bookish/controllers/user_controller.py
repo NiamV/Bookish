@@ -27,7 +27,22 @@ def user_routes(app):
                 'title': userbook.title,
                 'due_date': userbook.due_date,
             } for userbook in userbooks]
-        return {"books for user": results}
+        return {"books_for_user": results}
+
+    @app.route('/user/isUser', methods=['POST'])
+    def checkUser():
+        if not request.is_json:
+            return {"error": "The request payload is not in JSON format"}
+
+        data = request.get_json()
+
+        if 'user' not in data:
+            return {"error": "No user was provided"}
+
+        user = data['user']
+        users = db.session.query(User.id).filter(User.id == user)
+
+        return {"result": len(list(users)) != 0}
 
     @app.route('/user/assign', methods=['POST'])
     def assign_copy():
@@ -47,8 +62,12 @@ def user_routes(app):
         copy_id = data['copy_id']
         due_date = data['due_date']
 
-        db.session.query(Copy).filter(Copy.copy_id == copy_id).update({'user_checked_out': id, 'due_date': due_date})
-        db.session.commit()
+        copy = db.session.query(Copy).filter(Copy.copy_id == copy_id)
+        if copy[0].user_checked_out == -1:
+            db.session.query(Copy).filter(Copy.copy_id == copy_id).update({'user_checked_out': id, 'due_date': due_date})
+            db.session.commit()
+        else:
+            return {"error": "Book already taken out"}
 
         return {
             "message": "Assigned book with copy ID " + str(copy_id) + " to user with id " + str(id) + " due on " + str(

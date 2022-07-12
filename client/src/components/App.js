@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container } from "reactstrap";
 import { HomePage } from "./HomePage/HomePage";
+import { LoginPage } from "./UserLogin/LoginPage";
 import { ApiService } from "./ApiService";
 
 export default function App() {
@@ -31,6 +32,10 @@ export default function App() {
     <div>
       <Container>
           <HomePage apiService={apiService} okStatus={state.status} />
+      </Container>
+
+      <Container>
+          <LoginPage apiService={apiService}/>
       </Container>
     </div>
   );
