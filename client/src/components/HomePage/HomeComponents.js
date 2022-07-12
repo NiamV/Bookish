@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const HomeDiv = styled.div`
-  background-color: white;
-  position: relative;
-  height: 100%;
-  padding-bottom: 5px;
-`;
-
 export const HomeTitleContainer = styled.div`
   width: 50%;
   padding: 1em;
