@@ -17,7 +17,7 @@ export class ApiService {
 
   // Title: Boolean - true if Title and false if Author
   searchBook(searchType, data) {
-    let body = null
+    let body = null;
     if (searchType === 'title') {
       body = {"title": data}
     } else if (searchType === 'author') {
