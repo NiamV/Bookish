@@ -76,7 +76,62 @@ export class ApiService {
       .then((response) => resolve(response.json()))
       .catch((error) => reject(error))
 
-  );
+    );
+  }
+
+  user(id) {
+      let body = {"user": id}
+
+      return new Promise((resolve) =>
+          fetch("/user", {
+              method: "POST",
+              body: JSON.stringify(body),
+              headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json"
+              },
+          })
+              .then((response) => checkResponse(response))
+              .then((response) => resolve(response.json()))
+              .catch((error) => console.error(error))
+      );
+  }
+
+  isUser(id) {
+      let body = {"user": id}
+
+      return new Promise((resolve) =>
+          fetch("/user/isUser", {
+              method: "POST",
+              body: JSON.stringify(body),
+              headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json"
+              },
+          })
+              .then((response) => checkResponse(response))
+              .then((response) => resolve(response.json()))
+              .catch((error) => console.error(error))
+      );
+  }
+
+  user_assign(id, copy_id, due_date) {
+    let body = {"id": id, "copy_id": copy_id, "due_date": due_date}
+
+    return new Promise((resolve) =>
+      fetch("/user/assign", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+      })
+        .then((response) => checkResponse(response))
+        .then((response) => resolve(response.json()))
+        .catch((error) => console.error(error))
+
+    );
   }
 }
 

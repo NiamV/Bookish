@@ -6,12 +6,11 @@ class User(db.Model):
     __tablename__ = 'Users'
 
     # Here we outline what columns we want in our database
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String())
     access_token = db.Column(db.String())
 
-    def __init__(self, id, name, access_token):
-        self.id = id
+    def __init__(self, name, access_token):
         self.name = name
         self.access_token = access_token
 
