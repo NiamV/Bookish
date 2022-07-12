@@ -8,11 +8,12 @@ export const HomeDiv = styled.div`
 `;
 
 export const HomeTitleContainer = styled.div`
-  display block;
-  height: 100px;
-  padding: 12px;
-  margin:20px;
+  width: 50%;
+  padding: 1em;
+  margin: auto;
   border-bottom: 3px solid #dddddd;
+  text-align: center;
+  justify-content: center;
 `;
 
 export const HomeTitleTag = styled.span`
@@ -20,3 +21,14 @@ export const HomeTitleTag = styled.span`
   font-weight: bold;
 `;
 
+export const HomeSubTitleContainer = styled.div`
+  width: 60%;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+`;
+
+export const HomeSubTitleTag = styled.span`
+  font-size: 1.7em;
+  width: 25%;
+`;

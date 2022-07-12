@@ -1,18 +1,31 @@
-import React from "react"
-import { BookCreate } from "../BookCreate/BookCreate";
+import React, { useState } from "react"
+import { BookSearch } from "../BookSearch/BookSearch"
 import { BookDisplay } from "../BookDisplay/BookDisplay";
-import { BookUpload } from "../BookUpload/BookUpload"
 import {
-  HomeDiv
+  HomeDiv,
+  HomeTitleTag,
+  HomeTitleContainer,
+  HomeSubTitleTag,
+  HomeSubTitleContainer
 } from "./HomeComponents";
+import "./HomePage.css"
 
 export function HomePage(props) {
 
+  const [books, setBooks] = useState([]);
+
   return (
       <HomeDiv>
-        <BookDisplay apiService={props.apiService} />
-        <BookCreate apiService={props.apiService} />
-        <BookUpload apiService={props.apiService} />
+        <HomeTitleContainer>
+          <HomeTitleTag>BOOKISH</HomeTitleTag>
+          <br />
+          <HomeSubTitleContainer>
+            <HomeSubTitleTag>A library management system you can trust.</HomeSubTitleTag>
+          </HomeSubTitleContainer>
+        </HomeTitleContainer>
+        
+        <BookSearch apiService={props.apiService} books={books} setBooks={setBooks} />
+        <BookDisplay apiService={props.apiService} books={books} setBooks={setBooks} />
       </HomeDiv>
   );
 }
