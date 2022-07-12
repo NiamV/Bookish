@@ -39,7 +39,9 @@ export default function App() {
       </Container>
 
       <BrowserRouter>
-          <Route path="/login"  element={<LoginPage apiService={apiService}/>} />
+          <Routes>
+              <Route path="/login"  element={<LoginPage apiService={apiService}/>} />
+          </Routes>
       </BrowserRouter>
 
     </div>
