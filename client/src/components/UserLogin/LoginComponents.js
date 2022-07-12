@@ -4,6 +4,13 @@ export const LoginDiv = styled.div`
   background-color: red;
   position: relative;
   height: 100%;
+  padding-bottom: 250px;
+`;
+
+export const RegisterDiv = styled.div`
+  background-color: cyan;
+  position: relative;
+  height: 100%;
   padding-bottom: 5px;
 `;
 
