@@ -79,6 +79,24 @@ export class ApiService {
     );
   }
 
+  uploadFile(file) {
+    let data = new FormData();
+    data.append(file.name, file);
+    return new Promise((resolve, reject) => {
+      fetch("/books/upload", {
+        method: "POST",
+        body: data,
+        headers: {
+          "Accept": "application/json"
+        },
+      })
+        .then((response) => checkResponse(response))
+        .then((response) => resolve(response.json()))
+        .catch((error) => reject(error))
+  
+    })
+  }
+
   user(id) {
       let body = {"user": id}
 

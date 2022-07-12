@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   LoginDiv,
   LoginTitleTag,
@@ -37,7 +37,7 @@ export function LoginPage(props) {
 
   let handleAssignment = (event) => {
     event.preventDefault()
-    if(user != null && event.target[0].value != "") {
+    if(user !== null && event.target[0].value !== "") {
         let current_date = new Date();
         let due_date = new Date(current_date.setMonth(current_date.getMonth() + 1))
         props.apiService.user_assign(user, event.target[0].value, due_date.toDateString()).then((response) => {
