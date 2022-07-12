@@ -6,7 +6,21 @@ import {
 } from "./LoginComponents";
 
 export function RegisterPage(props) {
-      return (
+  const [output, setOutput] = useState("");
+
+  let handleRegistration = (event) => {
+    event.preventDefault()
+    props.apiService.user_create(event.target[0].value).then((response) => {
+        if(response.hasOwnProperty("error")){
+            setOutput(response.error)
+        } else {
+            setOutput(response.message)
+        }
+    })
+
+  }
+
+  return (
       <RegisterDiv>
         <LoginTitleContainer>
             <LoginTitleTag>Register</LoginTitleTag>

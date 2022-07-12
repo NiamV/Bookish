@@ -85,8 +85,11 @@ def user_routes(app):
 
         name = data['name']
 
+        users = db.session.query(User)
+        newID = len(list(users))
+
         create_user(name)
-        return {"message": "User has been successfully created."}
+        return {"message": "User has been successfully created with id: " + str(newID)}
 
 
 def create_user(name):

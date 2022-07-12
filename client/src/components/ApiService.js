@@ -133,6 +133,25 @@ export class ApiService {
 
     );
   }
+
+  user_create(name) {
+    let body = {"name": name, "access_token": name}
+
+    return new Promise((resolve) =>
+      fetch("/user/create", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+      })
+        .then((response) => checkResponse(response))
+        .then((response) => resolve(response.json()))
+        .catch((error) => console.error(error))
+
+    );
+  }
 }
 
 
