@@ -6,11 +6,17 @@ import {
 } from "./HomeComponents";
 
 export function HomePage(props) {
-  const [books, setBooks] = useState({books: []});
+  const [books, setBooks] = useState([]);
+  const [searchType, setSeatchType] = useState("title")
 
   let showBooks = () => {
-    props.apiService.books().then((books) => {
-      setBooks(books)
+    props.apiService.books().then((bookResponse) => {
+      if (bookResponse === {}) {
+        setBooks([])
+      } else {
+        setBooks(bookResponse.books)
+      }
+      
     })
   }
 
@@ -20,9 +26,17 @@ export function HomePage(props) {
   }
 
   let showBooksByTitle = (data) => {
-    props.apiService.book(true, data).then((books) => {
-      setBooks(books)
+    props.apiService.book(searchType, data).then((bookResponse) => {
+      if (bookResponse === {}) {
+        setBooks([])
+      } else {
+        setBooks(bookResponse.books)
+      }
     })
+  }
+
+  let onRadioChange = (event) => {
+    setSeatchType(event.target.value)
   }
 
   return (
@@ -33,12 +47,14 @@ export function HomePage(props) {
           <button type="button" onClick={showBooks}>See all books!</button>
 
           <form onSubmit={handleSearch}>
-            <input type="text"></input>
-            <input type="submit"></input>
+            <input type="text" />
+            <input type="radio" checked={searchType === 'title'} onChange={onRadioChange} value="title"/>By Title
+            <input type="radio" checked={searchType === 'author'} onChange={onRadioChange} value="author"/>By Author
+            <input type="submit" />
           </form>
 
 
-          {books.books.map((value, index) => {
+          {books.map((value, index) => {
             return <p key="{value.isbn}">{value.title} by {value.author} (ISBN: {value.isbn})</p>
           })}
 

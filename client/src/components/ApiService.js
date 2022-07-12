@@ -32,11 +32,20 @@ export class ApiService {
   }
 
   // Title: Boolean - true if Title and false if Author
-  book(title, data) {
+  book(searchType, data) {
+    let body = null
+    if (searchType === 'title') {
+      body = {"title": data}
+    } else if (searchType === 'author') {
+      body = {"author": data}
+    } else {
+      throw new Error("Invalid search type " + searchType)
+    }
+
     return new Promise((resolve) =>
       fetch("/book", {
         method: "POST",
-        body: JSON.stringify({title: data}),
+        body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
