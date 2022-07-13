@@ -6,7 +6,7 @@ import {
 } from "./LoginComponents";
 import {apiContext, loginContext} from "../App";
 import { Link, Navigate } from "react-router-dom"
-import {Nav} from "reactstrap";
+import { BookishHeader } from "../BookishNavbar/BookishNavbar"
 
 export function LoginPage(props) {
   // const [user, setUser] = useState(null);
@@ -33,6 +33,7 @@ export function LoginPage(props) {
 
   return (
       <LoginDiv>
+        <BookishHeader />
         <LoginTitleContainer>
             <LoginTitleTag>Login</LoginTitleTag>
             <p>Please enter your library card number:</p>
@@ -50,10 +51,6 @@ export function LoginPage(props) {
 
             <button><Link to={"/register"}>Register</Link></button>
         </LoginFormContainer>
-
-        <UserBooksContainer>
-            <button><Link to={"/"}>Back Home</Link></button>
-        </UserBooksContainer>
 
 
 

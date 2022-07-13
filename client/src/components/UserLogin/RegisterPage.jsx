@@ -6,6 +6,7 @@ import {
 } from "./LoginComponents";
 import {apiContext} from "../App";
 import {Link} from "react-router-dom";
+import {BookishHeader} from "../BookishNavbar/BookishNavbar";
 
 export function RegisterPage(props) {
   const [output, setOutput] = useState("");
@@ -26,6 +27,7 @@ export function RegisterPage(props) {
 
   return (
       <RegisterDiv>
+        <BookishHeader />
         <LoginTitleContainer>
             <LoginTitleTag>Register</LoginTitleTag>
 

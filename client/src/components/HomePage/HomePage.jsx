@@ -25,8 +25,8 @@ export function HomePage(props) {
         </HomeSubTitleContainer>
       </HomeTitleContainer>
 
-      <BookSearch apiService={props.apiService} books={books} setBooks={setBooks} />
-      <BookDisplay apiService={props.apiService} books={books} setBooks={setBooks} />
+      <BookSearch books={books} setBooks={setBooks} />
+      <BookDisplay books={books} setBooks={setBooks} />
     </div>
   );
 }

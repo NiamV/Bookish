@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import loadBooks from "../../../model/Book"
 
 import {
@@ -7,9 +7,12 @@ import {
     BookRadio,
     BookSubmit
 } from "./SearchComponents";
+import {apiContext} from "../../App";
 
 export function BookSearch(props) {
     const [searchType, setSeatchType] = useState("title")
+
+    const apiService = useContext(apiContext)
 
     let handleSearch = (event) => {
         event.preventDefault() // Cancels page refreshing
@@ -17,11 +20,11 @@ export function BookSearch(props) {
     }
 
     let searchAndShowBooks = (data) => {
-        props.apiService.searchBook(searchType, data).then((bookResponse) => {
+        apiService.searchBook(searchType, data).then((bookResponse) => {
             if (bookResponse === {}) {
                 props.setBooks([]);
             } else {
-                loadBooks(props.apiService, bookResponse.books).then((books) => {
+                loadBooks(apiService, bookResponse.books).then((books) => {
                     props.setBooks(books);
                 })
             }

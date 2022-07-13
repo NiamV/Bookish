@@ -6,9 +6,9 @@ import {
 } from "./LoginComponents";
 import {apiContext, loginContext} from "../App";
 import { Link, Navigate } from "react-router-dom"
+import {BookishHeader} from "../BookishNavbar/BookishNavbar";
 
 export function UserPage(props) {
-  const [user, setUser] = useState(null);
   const [books, setBooks] = useState([]);
   const [output, setOutput] = useState("");
   const [reroute, setReroute] = useState(<p></p>);
@@ -59,6 +59,7 @@ export function UserPage(props) {
   if(loginService.user == null){
     return(
         <LoginDiv>
+            <BookishHeader />
             <LoginTitleContainer>
                 <p>Please log in</p>
                 <button><Link to={"/login"}>Back to Login Page</Link></button>
@@ -70,6 +71,7 @@ export function UserPage(props) {
       return (
           <div>
           <LoginDiv>
+              <BookishHeader />
               <LoginTitleContainer>
                   <LoginTitleTag>Hi {username}</LoginTitleTag>
 
